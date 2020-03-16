@@ -1,0 +1,52 @@
+.btn,
+.btn-primary {
+    float: right;
+    margin-bottom: 70px;
+    width: 250px;
+    font-size: 17px;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+.btn:hover,
+.btn-primary:hover {
+    float: right;
+    margin-bottom: 70px;
+    width: 250px;
+    color: #4285F4;
+    font-size: 17px;
+    background-color: white;
+    border-color: #4285F4;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+.login {
+    float: none;
+    width: 150px;
+    margin-top: 5%;
+    font-size: 17px;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+.login:hover {
+    float: none;
+    width: 150px;
+    margin-top: 5%;
+    font-size: 17px;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
