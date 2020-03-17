@@ -28,7 +28,16 @@ class Equipo extends Model
     public static function get_equipos_det($id)
     {
 
-        $equipo = Equipo::where('equipos.id', $id)->where('ind_baja', 0)->join('tipos_equipos', 'tipos_equipos.id_tipo_equipo', '=', 'equipos.id_tipo_equipo')->leftJoin('empresas', 'empresas.id_empresa', '=', 'equipos.id_empresa')->leftJoin('sedes', 'sedes.id_sede', '=', 'equipos.id_sede')->leftJoin('ubicaciones', 'ubicaciones.id_ubicacion', '=', 'equipos.id_ubicacion')->leftJoin('riesgos', 'riesgos.id_riesgo', '=', 'equipos.id_riesgo')->leftJoin('users', 'users.id', '=', 'equipos.id_usuario_crea')->leftJoin('proveedores', 'proveedores.id_proveedor', '=', 'equipos.id_proveedor')->leftJoin('estados_equipos', 'estados_equipos.id_estado_equipo', '=', 'equipos.id_estado_equipo')->select('equipos.*', 'tipos_equipos.nombre AS tipo_equipo', 'empresas.nombre AS empresa', 'sedes.nombre AS sede', 'ubicaciones.nombre AS ubicacion', 'riesgos.nombre AS riesgo', 'users.name', 'users.nombre_2', 'users.apellido_1', 'users.apellido_2', 'proveedores.nombre AS proveedor', 'proveedores.nombre AS proveedor', 'estados_equipos.nombre AS estado_equipo')->get();
+        $equipo = Equipo::where('equipos.id', $id)->where('ind_baja', 0)->join('tipos_equipos', 'tipos_equipos.id_tipo_equipo', '=', 'equipos.id_tipo_equipo'
+            )->leftJoin('empresas', 'empresas.id_empresa', '=', 'equipos.id_empresa')->leftJoin(
+            'sedes', 'sedes.id_sede', '=', 'equipos.id_sede')->leftJoin('ubicaciones', 'ubicaciones.id_ubicacion', '=', 'equipos.id_ubicacion'
+            )->leftJoin('riesgos', 'riesgos.id_riesgo', '=', 'equipos.id_riesgo')->leftJoin(
+            'users', 'users.id', '=', 'equipos.id_usuario_crea')->leftJoin('proveedores', 'proveedores.id_proveedor', '=', 'equipos.id_proveedor'
+            )->leftJoin('estados_equipos', 'estados_equipos.id_estado_equipo', '=', 'equipos.id_estado_equipo'
+            )->select('equipos.*', 'tipos_equipos.nombre AS tipo_equipo', 'empresas.nombre AS empresa', 'sedes.nombre AS sede', 
+            'ubicaciones.nombre AS ubicacion', 'riesgos.nombre AS riesgo', 'users.name', 'users.nombre_2', 'users.apellido_1', 
+            'users.apellido_2', 'proveedores.nombre AS proveedor', 'proveedores.nombre AS proveedor', 
+            'estados_equipos.nombre AS estado_equipo')->get();
         return $equipo;
 
     }
@@ -119,7 +128,9 @@ class Equipo extends Model
     public static function getEquipoDatos()
     {
 
-        $equipos = Equipo::select('equipos.*', 'sedes.nombre AS nombre_sede', 'empresas.nombre AS nombre_empresa')->where('ind_baja', 0)->join('sedes', 'sedes.id_sede', '=', 'equipos.id_sede')->join('empresas', 'empresas.id_empresa', '=', 'equipos.id_empresa');
+        $equipos = Equipo::select('equipos.*', 'sedes.nombre AS nombre_sede', 'empresas.nombre AS nombre_empresa'
+        )->where('ind_baja', 0)->join('sedes', 'sedes.id_sede', '=', 'equipos.id_sede'
+        )->join('empresas', 'empresas.id_empresa', '=', 'equipos.id_empresa');
         return $equipos;
 
     }
@@ -131,7 +142,7 @@ class Equipo extends Model
             $sql = $query->where('nombre_equipo', 'like', '%' . $search . '%')->orWhere('serie', 'like', '%' . $search . '%')->orWhere('modelo', 'like', '%' . $search . '%')->where('ind_baja', 0)->join('sedes', 'sedes.id_sede', '=', 'equipos.id_sede')->join('empresas', 'empresas.id_empresa', '=', 'equipos.id_empresa')->select('equipos.*', 'sedes.nombre AS nombre_sede', 'empresas.nombre AS nombre_empresa');
             return $sql;
         } else {
-            getEquipoDatos();
+            $this->getEquipoDatos();
         }
 
     }

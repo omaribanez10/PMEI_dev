@@ -9,7 +9,7 @@ Route::get('equipos/show/{id}', 'EquiposController@show')->name('equipos.show')-
 Route::post('equipos/store', 'EquiposController@store')->name('equipos.store')->middleware('auth','roles:1');
 Route::get('equipos/edit/{id}', 'EquiposController@edit')->name('equipos.edit')->middleware('auth','roles:1');
 Route::patch('equipos/baja/{equipo}', 'EquiposController@destroy')->name('equipos.destroy')->middleware('auth','roles:1');
-Route::patch('equipos/update/{equipo}', 'EquiposController@update')->name('equipos.update')->middleware('auth','roles:1');
+Route::post('equipos/update/{equipo}', 'EquiposController@update')->name('equipos.update')->middleware('auth','roles:1');
 
 Route::post('equipos/cargar_datos', 'EquiposController@cargarDatosSelect')->name('equipos.cargar_datos');
 

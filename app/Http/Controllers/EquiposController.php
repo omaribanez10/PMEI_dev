@@ -139,18 +139,12 @@ class EquiposController extends Controller
         $estados          = EstadoEquipo::all();
         $riesgos          = Riesgo::all();
         $ubicaciones      = Ubicacion::all();
-        $equipo_empresa   = "";
-        $equipo_sede      = "";
-        $equipo_tipo      = "";
-        $equipo_proveedor = "";
-        $equipo_estado    = "";
+        $equipo_det       = "";
         $componentes      = Componente::all();
-
-
 
         return view('equipos.create', [
             'equipo' => new Equipo,
-        ], compact('empresas', 'sedes', 'tipos_equipos', 'estados', 'proveedores', 'equipo_sede', 'equipo_tipo', 'equipo_proveedor', 'equipo_estado', 'equipo_empresa', 'riesgos', 'ubicaciones', 'componentes'));
+        ], compact('empresas', 'sedes', 'tipos_equipos',  'proveedores', 'estados',  'riesgos', 'ubicaciones', 'equipo_det', 'componentes'));
     }
     /**
      * Store a newly created resource in storage.
@@ -158,7 +152,7 @@ class EquiposController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request/*SaveEquipoRequest $request, SaveEquipoComponenteRequest $request_2*/)
+    public function store(Request $request)
     {
         $equipo = new Equipo();
         $equipo->id_usuario_crea = $request->id_usuario_crea;
@@ -181,15 +175,13 @@ class EquiposController extends Controller
         if ($request->hasFile('foto') && $equipo->save() == true) {
 
             $image = $request->file('foto');
-            $filename = time().'.'.$image->getClientOriginalName();
+            $filename = time() . '.' . $image->getClientOriginalName();
             $image->move(public_path('storage'), $filename);
             $equipo->foto = $filename;
             $equipo->save();
         }
-
         if ($equipo->save() == true) {
-            return response()->json(array('success'=>"El equipo se ha guardado correctamente"));
-
+            return response()->json(array('success' => "El equipo se ha guardado correctamente"));
         } else {
             return response()->json(['fail' => 'Falló al intentar guardar el equipo']);
         }
@@ -227,24 +219,12 @@ class EquiposController extends Controller
         $tipos_equipos    = TipoEquipo::all();
         $proveedores      = Proveedor::all();
         $estados          = EstadoEquipo::all();
-        $empresas         = Empresa::all();
         $riesgos          = Riesgo::all();
         $ubicaciones      = Ubicacion::all();
-        $equipo_empresa   = "";
-        $equipo_sede      = "";
-        $equipo_tipo      = "";
-        $equipo_proveedor = "";
-        $equipo_estado    = "";
-        $equipo_empresa   = Equipo::buscarempresaEquipo($id);
-        $equipo_sede      = Equipo::buscarsedeEquipo($id);
-        $equipo_tipo      = Equipo::buscartipoEquipo($id);
-        $equipo_proveedor = Equipo::buscarproveedorEquipo($id);
-        $equipo_estado    = Equipo::buscarestadoEquipo($id);
+        $equipo_det       = Equipo::get_equipos_det($id);
         $componentes = "";
 
-        return view('equipos.edit', [
-            'equipo' => Equipo::findOrFail($id),
-        ], compact('empresas', 'sedes', 'tipos_equipos', 'estados', 'proveedores', 'equipo_sede', 'equipo_tipo', 'equipo_proveedor', 'equipo_estado', 'equipo_empresa', 'riesgos', 'ubicaciones', 'componentes'));
+        return view('equipos.edit', [], compact('empresas', 'sedes', 'tipos_equipos', 'proveedores', 'estados', 'riesgos', 'ubicaciones', 'equipo_det', 'componentes'));
     }
 
     /**
@@ -254,19 +234,39 @@ class EquiposController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Equipo $equipo, SaveEquipoRequest $request)
+    public function update(Equipo $equipo, Request $request)
     {
-        $equipo->update($request->validated());
-        if ($request->hasFile('foto')) {
-            $path         = $request->file('foto')->store('public');
-            $equipo->foto = $path;
+        $equipo->id_usuario_crea = $request->id_usuario_crea;
+        $equipo->consecutivo = $request->consecutivo;
+        $equipo->nombre_equipo = $request->nombre_equipo;
+        $equipo->serie = $request->serie;
+        $equipo->descripcion = $request->descripcion;
+        $equipo->marca = $request->marca;
+        $equipo->modelo = $request->modelo;
+        $equipo->id_empresa = $request->id_empresa;
+        $equipo->id_sede = $request->id_sede;
+        $equipo->id_ubicacion = $request->id_ubicacion;
+        $equipo->id_tipo_equipo = $request->id_tipo_equipo;
+        $equipo->id_proveedor = $request->id_proveedor;
+        $equipo->id_estado_equipo = $request->id_estado_equipo;
+        $equipo->registro_invima = $request->registro_invima;
+        $equipo->id_riesgo = $request->id_riesgo;
+        $equipo->update();
+
+        if ($request->hasFile('foto') && $equipo->update()) {
+
+            $image = $request->file('foto');
+            $filename = time() . '.' . $image->getClientOriginalName();
+            $image->move(public_path('storage'), $filename);
+            $equipo->foto = $filename;
             $equipo->update();
         }
-
-        if ($equipo) {
-            return redirect()->route('equipos.show', $equipo);
-        } else {
-            return 'No se pudo guardar los datos, error en conexión';
+       
+         if($equipo->update()){
+            return response()->json(array('success' => "El equipo se ha actualizado correctamente", 'view' => route('equipos.show', $equipo->id)));
+            //return redirect()->route('equipos.show', $equipo);
+        }else{
+            return response()->json(array('fail' => "El equipo se ha no se ha podido actualizar"));
         }
     }
     /**

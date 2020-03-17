@@ -2,19 +2,15 @@
 @extends('layout')
 @section('content')
 
-<h3 align="center">Registro equipos</h3>
+
 <div class="col-md-8 container mx-auto my-auto">
-
-
-	<div align="center" id='loader' style='display: none;'>
-		<img src="{{asset('images/ajax_loader.gif')}}" width='24px' height='24px'>
-	</div>
-
+	
 	<form id="equipos_form" class="needs-validation shadow rounded py-3 px-4" action="" method="POST" enctype="multipart/form-data">
 		<div class="form-group">
-			<!--<div class="errorTxt" style="border: 1px solid red;  min-height: 20px;"></div>-->
-			@include('equipos._form')
-			<button type="button" class="btn btn-primary" id="guardar_equipo"><i class="fas fa-check"></i>&nbsp;&nbsp;&nbsp;Guardar</button>
+			<fieldset>
+				<legend align="center">Registro equipos</legend>
+				@include('equipos._form')
+			</fieldset>
 		</div>
 	</form>
 </div>
@@ -45,7 +41,7 @@
 			@todo validar el formulario para que algunos campos sean requeridos obligatoriamente y así no haya inconvenientes
 	    con respecto al debido funcionamiento de la plataforma 
 		 */
-		e.preventDefault();
+
 		$('#equipos_form').validate({
 			debug: true,
 			ignore: '*:not([name])',
@@ -109,11 +105,11 @@
 		});
 
         /**@generator captura y validación de datos vacíos al momento de oprimir el boton de guardado de datos, 
-		se valida si el input file está vacío, y se envían los datos al controller @class EquiposController metodo @method store */
+		se valida si el input file está vacío, y se envían los datos al controller @class EquiposController metodo store */
 
 		$('#guardar_equipo').click(function(e) {
+			e.preventDefault();
 			$("#equipos_form").valid();
-
 			var consecutivo = $('#consecutivo').val().trim();
 			var nombre_equipo = $('#nombre_equipo').val().trim();
 			var serie = $('#serie').val().trim();
@@ -153,7 +149,7 @@
 				});
 				var form = $("#equipos_form")[0];
 				var formData = new FormData(form);
-				formData.append('parent_id', '0');
+
 				/**@generator implementacion del AJAX que envía los datos al controller mencionado anteriormente */
 				jQuery.ajax({
 
@@ -164,7 +160,6 @@
 					contentType: false,
 					dataType: 'json',
 					success: function(result) {
-						console.log(result);
 						swal({
 							title: "",
 							text: result.success,

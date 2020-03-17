@@ -8,8 +8,8 @@
             </div>
             <div class="col-sm">
                 <div>
-                    <img src="{{ Storage::url($row->foto)
-                    }}" class="card-img-top" alt="">
+                    
+                    <img src="{{asset('storage/'.$row->foto)}}" class="card-img-top" alt="">
                     <br>
                     <br>
                     <h4 align="center" class="card-nombre-equipo">{{ mb_strtoupper($row->nombre_equipo)}}</h4>

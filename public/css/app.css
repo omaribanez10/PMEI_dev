@@ -7,6 +7,14 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+form{
+    margin-top: initial;
+    margin-bottom: unset; 
+}
+
+label{
+  color: #5b5b5b;
+}
 
 
 :root {
@@ -324,10 +332,26 @@ fieldset {
   min-width: 0;
   padding: 0;
   margin: 0;
-  border: 0;
+  border-color: #5b5b5b;
+  border:solid 1px #dddddd;
+  border-radius: 4px;
 }
 
 legend {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 30px;
+	font-weight: bold;
+	padding: 3px 30px 3px 30px;
+  width: auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  color: #5b5b5b;
+
+}
+
+/*legend {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -337,7 +361,7 @@ legend {
   line-height: inherit;
   color: inherit;
   white-space: normal;
-}
+}*/
 
 @media (max-width: 1200px) {
   legend {
@@ -2628,8 +2652,9 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background: #227dc7 linear-gradient(180deg, #4290cf, #227dc7) repeat-x;
-  border-color: #2176bd;
+  background: #1764a3 linear-gradient(180deg, #1764a3, #1764a3) repeat-x;
+  border-color: #1764a3;
+  box-shadow: #124d7e;
 }
 
 .btn-primary:focus,
@@ -4051,7 +4076,7 @@ input[type=button].btn-block {
 
 .custom-select:focus {
   border-color: #a1cbef;
-  outline: 0;
+  outline: none;
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 

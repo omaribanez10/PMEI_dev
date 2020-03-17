@@ -35,11 +35,12 @@
             @yield('content')
 			@yield('scripts')
         </main>
-        <footer class="bg-white text-center text-black-50 py-3 shadow">
-            {{ config('app.name') }} | Copyright @ {{ date('Y') }}
+        <footer>
+            <div class="text-center  py-3 shadow footer" >
+              <!--  {{ config('app.name') }} | Copyright @ {{ date('Y') }}-->
+            </div>
+            
         </footer>
-    </div>
-    @include('sweetalert::alert')
 </body>
 
 </html>

@@ -126,6 +126,7 @@ class MantenimientosController extends Controller
      */
     public function update(Mantenimiento $mantenimiento, SaveMantenimientosRequest $request)
     {
+        dd($mantenimiento);
         $rta = $mantenimiento->update($request->validated());
         if ($rta) {
             return redirect()->route('home', $mantenimiento);
